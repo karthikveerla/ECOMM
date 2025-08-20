@@ -7,7 +7,7 @@ export default function SignUp() {
     email: "",
     fullName: "",
     password: "",
-    role: "ROLE_CUSTOMER",
+    role: "CUSTOMER",
   });
 
   const [formErrors, setFormErrors] = useState({});
@@ -76,8 +76,8 @@ export default function SignUp() {
 
           <label>Role</label>
           <select name="role" value={form.role} onChange={handleChange}>
-            <option value="ROLE_CUSTOMER">Customer</option>
-            <option value="ROLE_PROVIDER">Provider</option>
+            <option value="CUSTOMER">Customer</option>
+            <option value="PROVIDER">Provider</option>
           </select>
 
           <button type="submit">Sign Up</button>
