@@ -2,11 +2,17 @@ package app.jorket.security;
 
 import app.jorket.entities.User;
 import io.jsonwebtoken.*;
+import io.jsonwebtoken.security.Keys;
+import jakarta.annotation.PostConstruct;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import java.nio.charset.StandardCharsets;
 import java.util.*;
 import java.util.stream.Collectors;
+import java.security.Key;
+import app.jorket.entities.Role;
 
 @Service
 public class JwtService {
@@ -16,17 +22,20 @@ public class JwtService {
 
     @Value("${jwt.access-token-expiration}")
     private long accessTokenExpiration;
+    private Key key;
+    @PostConstruct
+    public void init() {
+        this.key = Keys.hmacShaKeyFor(jwtSecret.getBytes(StandardCharsets.UTF_8));
+    }
 
     public String generateToken(User user) {
-        Map<String, Object> claims = new HashMap<>();
-        claims.put("roles", user.getRoles().stream().map(role -> role.getName()).collect(Collectors.toSet()));
-
         return Jwts.builder()
-                .setClaims(claims)
                 .setSubject(user.getEmail())
+                .claim("fullName", user.getFullName())
+                .claim("roles", user.getRoles().stream().map(Role::getName).toList())
                 .setIssuedAt(new Date())
-                .setExpiration(new Date(System.currentTimeMillis() + accessTokenExpiration))
-                .signWith(SignatureAlgorithm.HS256, jwtSecret.getBytes())
+                .setExpiration(new Date(System.currentTimeMillis() + 86400000)) // 1 day
+                .signWith(key, SignatureAlgorithm.HS256)
                 .compact();
     }
 

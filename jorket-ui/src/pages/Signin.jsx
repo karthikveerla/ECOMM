@@ -1,6 +1,8 @@
 import { useState } from "react";
 import "../styles/SignIn.css";
 import signinImage from "../assets/signup-image.gif"; // use same or replace
+import { useNavigate } from 'react-router-dom';
+
 
 export default function Signin() {
   const [form, setForm] = useState({
@@ -10,6 +12,8 @@ export default function Signin() {
 
   const [errors, setErrors] = useState({});
   const [message, setMessage] = useState("");
+  const navigate = useNavigate();
+
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -38,8 +42,10 @@ export default function Signin() {
       const data = await res.json();
       if (res.ok) {
         setMessage("Login successful!");
-        console.log("Received tokens:", data);
-        // save accessToken / refreshToken to localStorage or state
+        localStorage.setItem("token", data.accessToken); // optional storage
+        setTimeout(() => {
+          navigate("/dashboard"); // or any application-inside route
+        }, 1000);
       } else {
         setMessage("Error: " + (data.message || "Login failed."));
       }
