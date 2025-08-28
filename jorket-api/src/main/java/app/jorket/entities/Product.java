@@ -1,10 +1,22 @@
 package app.jorket.entities;
 
+import org.springframework.stereotype.Component;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+
+@Component
+@Entity
 public class Product {
+    @Id
     private int prod_id;
     private String prod_name;
     private int prod_price;
+    private String prod_desc;
 
+
+    public Product() {
+    }
 
     public Product(int prod_id, String prod_name, int prod_price) {
         this.prod_id = prod_id;
