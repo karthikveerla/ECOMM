@@ -44,7 +44,7 @@ export default function Signin() {
         setMessage("Login successful!");
         localStorage.setItem("token", data.accessToken); // optional storage
         setTimeout(() => {
-          navigate("/dashboard"); // or any application-inside route
+          navigate("/home"); // or any application-inside route
         }, 1000);
       } else {
         setMessage("Error: " + (data.message || "Login failed."));
