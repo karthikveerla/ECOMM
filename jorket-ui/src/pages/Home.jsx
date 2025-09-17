@@ -8,7 +8,7 @@ const Home = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get("http://localhost:8080/api/products");
+        const response = await axios.get("http://localhost:8080/products");
         setProducts(response.data);
         console.log(response.data);
       } catch (error) {
@@ -34,7 +34,7 @@ const Home = () => {
         {products.map((product) => (
           <div
             className="card mb-3"
-            key={product.id}
+            key={product.prod_id}
             style={{
               width: "270px",
               height: "210px",
@@ -63,7 +63,7 @@ const Home = () => {
                   className="card-title"
                   style={{ margin: "0 0 10px 0", fontSize: "1.2rem" }}
                 >
-                  {product.name.toUpperCase()}
+                  {product.prod_name}
                 </h5>
                 <i
                   className="card-brand"
@@ -83,7 +83,7 @@ const Home = () => {
                   }}
                 >
                   <i className="bi bi-currency-rupee"></i>
-                  {product.price}
+                  {product.prod_price}
                 </h5>
               </div>
               <button
