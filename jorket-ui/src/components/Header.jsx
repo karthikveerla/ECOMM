@@ -8,6 +8,7 @@ export default function Header() {
         <Link to="/" style={{ textDecoration: 'none', color: '#c1cddaff' }}>
           <h1>Jorket</h1>
         </Link>
+        <Link to="/addrecord">Add Record</Link>
       </div>
       <nav className="nav-links">
         <Link to="/signin">Sign In</Link>
