@@ -38,14 +38,13 @@ export default function SignUp() {
         body: JSON.stringify({
           email: form.email,
           password: form.password,
-          fullName: form.fullName,
-          roles: [form.role],
+          fullName: form.fullName
         }),
       });
 
       if (res.ok) {
         setMessage("Signup successful!");
-        setForm({ email: "", fullName: "", password: "", role: "ROLE_CUSTOMER" });
+        setForm({ email: "", fullName: "", password: "" });
       } else {
         const data = await res.json();
         setMessage("Error: " + (data.message || "Signup failed."));
@@ -73,12 +72,6 @@ export default function SignUp() {
           <label>Password</label>
           <input type="password" name="password" value={form.password} onChange={handleChange} />
           {formErrors.password && <p className="error">{formErrors.password}</p>}
-
-          <label>Role</label>
-          <select name="role" value={form.role} onChange={handleChange}>
-            <option value="CUSTOMER">Customer</option>
-            <option value="PROVIDER">Provider</option>
-          </select>
 
           <button type="submit">Sign Up</button>
 

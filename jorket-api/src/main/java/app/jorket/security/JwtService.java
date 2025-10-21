@@ -12,7 +12,6 @@ import java.nio.charset.StandardCharsets;
 import java.util.*;
 import java.util.stream.Collectors;
 import java.security.Key;
-import app.jorket.entities.Role;
 
 @Service
 public class JwtService {
@@ -32,7 +31,6 @@ public class JwtService {
         return Jwts.builder()
                 .setSubject(user.getEmail())
                 .claim("fullName", user.getFullName())
-                .claim("roles", user.getRoles().stream().map(Role::getName).toList())
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(System.currentTimeMillis() + 86400000)) // 1 day
                 .signWith(key, SignatureAlgorithm.HS256)
