@@ -25,8 +25,8 @@ public class SecurityConfig {
             .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .authorizeHttpRequests(auth -> auth
                 .requestMatchers("/api/v1/user/**").permitAll()           // ✅ Public signup/login
-                .requestMatchers("/api/v1/cashbook/**").permitAll()     // Protected by role
-                .requestMatchers("/products/**").permitAll() 
+                .requestMatchers("/api/v1/cashbook/**").permitAll()     // ✅ Public cash book management
+                .requestMatchers("/api/v1/record/**").permitAll() // ✅ Public record entry management
                 .anyRequest().authenticated()
             );
 

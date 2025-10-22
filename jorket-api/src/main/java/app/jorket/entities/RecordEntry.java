@@ -2,6 +2,9 @@ package app.jorket.entities;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+
+import app.jorket.entities.enums.EntryType;
+import app.jorket.entities.enums.PaymentMode;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
