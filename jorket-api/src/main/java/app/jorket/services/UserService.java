@@ -38,7 +38,7 @@ public class UserService {
 
     // Login logic
     public AuthResponse login(LoginRequest request) {
-        User user = userRepo.findByEmail(request.getEmail())
+        User user = userRepo.findByEmailIgnoreCase(request.getEmail())
                 .orElseThrow(() -> new RuntimeException("Invalid email or password"));
 
         if (!passwordEncoder.matches(request.getPassword(), user.getPassword())) {
@@ -47,9 +47,6 @@ public class UserService {
 
         String token = jwtService.generateToken(user);
 
-        return new AuthResponse(
-                token,
-                user.getEmail()
-        );
+        return new AuthResponse(token, user.getId(), user.getFullName(), user.getEmail());
     }
 }

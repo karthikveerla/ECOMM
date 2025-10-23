@@ -33,7 +33,7 @@ export default function Signin() {
     if (Object.keys(errs).length > 0) return;
 
     try {
-      const res = await fetch("http://localhost:8080/api/auth/login", {
+      const res = await fetch("http://localhost:8080/api/v1/user/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(form),
@@ -42,9 +42,19 @@ export default function Signin() {
       const data = await res.json();
       if (res.ok) {
         setMessage("Login successful!");
-        localStorage.setItem("token", data.accessToken); // optional storage
+        console.log("Login response data:", data);
+        const { accessToken, id, fullName, email: userEmail } = data;
+
+        // ✅ Save data in localStorage
+        localStorage.setItem("accessToken", accessToken);
+        localStorage.setItem("userId", id);
+        localStorage.setItem("userName", fullName);
+        localStorage.setItem("userEmail", userEmail);
+        console.log("User data saved to localStorage");
+        console.log("Access Token:", accessToken);
+        console.log("User ID:", id);
         setTimeout(() => {
-          navigate("/home"); // or any application-inside route
+          navigate("/dashboard"); // or any application-inside route
         }, 1000);
       } else {
         setMessage("Error: " + (data.message || "Login failed."));

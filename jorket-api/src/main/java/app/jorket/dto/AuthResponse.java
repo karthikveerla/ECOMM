@@ -1,26 +1,35 @@
 package app.jorket.dto;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class AuthResponse {
     private String accessToken;
-    // private String refreshToken;
+    private Long id;
+    private String fullName;
     private String email;
 
-    public AuthResponse() {}
+    // public AuthResponse() {}
 
-    public AuthResponse(String accessToken, String email) {
-        this.accessToken = accessToken;
-        // this.refreshToken = refreshToken;
-        this.email = email;
-    }
+    // public AuthResponse(String accessToken, String email) {
+    //     this.accessToken = accessToken;
+    //     // this.refreshToken = refreshToken;
+    //     this.email = email;
+    // }
 
-    // Getters & setters
-    public String getAccessToken() { return accessToken; }
-    public void setAccessToken(String accessToken) { this.accessToken = accessToken; }
+    // // Getters & setters
+    // public String getAccessToken() { return accessToken; }
+    // public void setAccessToken(String accessToken) { this.accessToken = accessToken; }
 
     // public String getRefreshToken() { return refreshToken; }
     // public void setRefreshToken(String refreshToken) { this.refreshToken = refreshToken; }
 
-    public String getEmail() { return email; }
-    public void setEmail(String email) { this.email = email; }
+    // public String getEmail() { return email; }
+    // public void setEmail(String email) { this.email = email; }
 }

@@ -1,15 +1,23 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 
-const Home = () => {
-  const [products, setProducts] = useState([]);
+const Dashboard = () => {
+  const [cashBooks, setCashBooks] = useState([]);
   const [isError, setIsError] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get("http://localhost:8080/products");
-        setProducts(response.data);
+        const token = localStorage.getItem("accessToken");
+        const userId = localStorage.getItem("userId");
+        const response = await axios.get("http://localhost:8080/api/v1/cashbook/list", {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+          params: { userId },
+        });
+
+        setCashBooks(response.data);
         console.log(response.data);
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -31,10 +39,10 @@ const Home = () => {
   return (
     <>
       <div className="grid">
-        {products.map((product) => (
+         {cashBooks.map((cashBook) => (
           <div
             className="card mb-3"
-            key={product.prod_id}
+            key={cashBook.id}
             style={{
               width: "270px",
               height: "210px",
@@ -63,13 +71,13 @@ const Home = () => {
                   className="card-title"
                   style={{ margin: "0 0 10px 0", fontSize: "1.2rem" }}
                 >
-                  {product.prod_name}
+                  {cashBook.title}
                 </h5>
                 <i
                   className="card-brand"
                   style={{ fontStyle: "italic", fontSize: "0.8rem" }}
                 >
-                  {"by " + product.brand}
+                  {"by " + cashBook.month}
                 </i>
               </div>
               <hr className="hr-line" style={{ margin: "10px 0" }} />
@@ -83,7 +91,7 @@ const Home = () => {
                   }}
                 >
                   <i className="bi bi-currency-rupee"></i>
-                  {product.prod_price}
+                  {cashBook.netTotal}
                 </h5>
               </div>
               <button
@@ -100,4 +108,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default Dashboard;

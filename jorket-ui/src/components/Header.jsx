@@ -6,7 +6,7 @@ export default function Header() {
     <header className="header-container">
       <div className="logo">
         <Link to="/" style={{ textDecoration: 'none', color: '#c1cddaff' }}>
-          <h1>Jorket</h1>
+          <h1>ET</h1>
         </Link>
         <Link to="/addrecord">Add Record</Link>
       </div>
