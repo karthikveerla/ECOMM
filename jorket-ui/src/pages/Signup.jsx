@@ -1,6 +1,8 @@
 import { useState } from "react";
 import "../styles/SignUp.css";
 import signupImage from "../assets/signup-image.gif"; // path to uploaded image
+import { useNavigate } from 'react-router-dom';
+
 
 export default function SignUp() {
   const [form, setForm] = useState({
@@ -12,6 +14,7 @@ export default function SignUp() {
 
   const [formErrors, setFormErrors] = useState({});
   const [message, setMessage] = useState("");
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -32,7 +35,7 @@ export default function SignUp() {
     if (Object.keys(errors).length > 0) return;
 
     try {
-      const res = await fetch("http://localhost:8080/api/auth/signup", {
+      const res = await fetch("http://localhost:8080/api/v1/user/signup", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -42,15 +45,18 @@ export default function SignUp() {
         }),
       });
 
+      const data = await res.json().catch(() => ({})); // 👈 prevent crash if no JSON
+
       if (res.ok) {
         setMessage("Signup successful!");
-        setForm({ email: "", fullName: "", password: "" });
+        navigate("/signin");
       } else {
-        const data = await res.json();
-        setMessage("Error: " + (data.message || "Signup failed."));
+        // Safely get message from backend response
+        setMessage(data.message ? data.message : "Signup failed. Please try again.");
+        console.error("Signup error data:", data);
       }
     } catch (err) {
-      setMessage("Error: Could not connect to server.");
+      setMessage("❌ Error: Could not connect to server.");
     }
   };
 
