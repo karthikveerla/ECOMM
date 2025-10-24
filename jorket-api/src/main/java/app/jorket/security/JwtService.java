@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 
 import java.nio.charset.StandardCharsets;
 import java.util.*;
-import java.util.stream.Collectors;
 import java.security.Key;
 
 @Service
@@ -38,24 +37,14 @@ public class JwtService {
     }
 
     public Claims validateToken(String token) {
-        return Jwts.parser()
-                .setSigningKey(jwtSecret.getBytes())
+        return Jwts.parserBuilder()
+                .setSigningKey(jwtSecret.getBytes(StandardCharsets.UTF_8))
+                .build()
                 .parseClaimsJws(token)
                 .getBody();
     }
 
     public String extractEmail(String token) {
         return validateToken(token).getSubject();
-    }
-
-    public Set<String> extractRoles(String token) {
-        Claims claims = validateToken(token);
-        Object rolesObj = claims.get("roles");
-
-        if (rolesObj instanceof List<?> rolesList) {
-            return rolesList.stream().map(Object::toString).collect(Collectors.toSet());
-        }
-
-        return Set.of();
     }
 }

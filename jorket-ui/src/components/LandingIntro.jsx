@@ -1,11 +1,20 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
+import landingImage from "../assets/landing.png"; // Optional: an image for decoration
 
 const LandingIntro = () => {
   return (
-    <section className="min-h-screen flex flex-col items-center justify-center text-center bg-gradient-to-br from-blue-50 to-indigo-100 px-6">
+    <section className="w-full h-[calc(100vh-64px)] flex flex-col items-center justify-center text-center bg-gradient-to-br from-blue-50 to-indigo-100 px-1">
       {/* Animated intro text */}
+        <motion.img
+        src={landingImage}
+        alt="Expense Tracker Dashboard Preview"
+        className="w-full max-w-3xl mt-12 rounded-2xl shadow-lg"
+        initial={{ opacity: 0, y: 40 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.3, duration: 0.8 }}
+      />
       <motion.div
         initial={{ opacity: 0, y: 40 }}
         animate={{ opacity: 1, y: 0 }}
@@ -39,14 +48,7 @@ const LandingIntro = () => {
       </motion.div>
 
       {/* Optional: Decorative image or illustration */}
-      <motion.img
-        src="/assets/expense-dashboard-preview.png"
-        alt="Expense Tracker Dashboard Preview"
-        className="w-full max-w-3xl mt-12 rounded-2xl shadow-lg"
-        initial={{ opacity: 0, y: 40 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.3, duration: 0.8 }}
-      />
+
     </section>
   );
 };

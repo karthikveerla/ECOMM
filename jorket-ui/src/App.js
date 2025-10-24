@@ -5,7 +5,11 @@ function App() {
   return (
     <div className="App">
       <Header />
-      <AppRoutes />
+      <main className="pt-16">
+         <AppRoutes />
+      </main>
+               {/* This loads your page content (LandingPage, Dashboard, etc.) */}
+
     </div>
   );
 }

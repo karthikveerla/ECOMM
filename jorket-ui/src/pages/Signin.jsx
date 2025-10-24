@@ -1,5 +1,5 @@
 import { useState } from "react";
-import "../styles/SignIn.css";
+// REMOVED: import "../styles/SignIn.css";
 import signinImage from "../assets/signup-image.gif"; // use same or replace
 import { useNavigate } from 'react-router-dom';
 
@@ -65,24 +65,76 @@ export default function Signin() {
   };
 
   return (
-    <div className="signin-container">
-      <div className="signin-card">
-        <img src={signinImage} alt="Sign In" className="signin-image" />
-        <form className="signin-form" onSubmit={handleSubmit}>
-          <h2>Welcome Back</h2>
+    // Equivalent of .signin-container & height: calc(100vh - 80px)
+    // Assuming your fixed header is 64px (h-16), so 80px is close to pt-20
+    <div 
+      className="
+        flex justify-center items-center 
+        bg-[#f9f7fb] 
+        pt-20 lg:pt-0 
+        min-h-screen 
+        lg:min-h-[calc(100vh-64px)] 
+      "
+    >
+      {/* Equivalent of .signin-card */}
+      <div 
+        className="
+          flex bg-white shadow-xl rounded-xl overflow-hidden 
+          max-w-4xl w-full mx-4 lg:mx-0 
+          my-8 lg:my-0
+        "
+      >
+        {/* Equivalent of .signin-image */}
+        {/* Hidden on small screens to save space */}
+        <img 
+          src={signinImage} 
+          alt="Sign In" 
+          className="w-1/2 object-cover hidden md:block" 
+        />
+        
+        {/* Equivalent of .signin-form */}
+        <form 
+          className="p-10 w-full md:w-1/2 bg-[#fdfbff]" 
+          onSubmit={handleSubmit}
+        >
+          {/* Equivalent of .signin-form h2 */}
+          <h2 className="text-3xl text-[#6a1b9a] mb-6 text-center font-semibold">
+            Welcome Back
+          </h2>
 
-          <label>Email</label>
-          <input type="email" name="email" value={form.email} onChange={handleChange} />
-          {errors.email && <p className="error">{errors.email}</p>}
+          <label className="block mb-1 font-semibold text-gray-700">Email</label>
+          <input 
+            type="email" 
+            name="email" 
+            value={form.email} 
+            onChange={handleChange} 
+            className="w-full p-2 border border-gray-300 rounded-md mb-4 focus:ring-2 focus:ring-[#8e24aa] focus:border-transparent"
+          />
+          {errors.email && <p className="text-red-600 text-sm mt-[-8px] mb-3">{errors.email}</p>}
 
-          <label>Password</label>
-          <input type="password" name="password" value={form.password} onChange={handleChange} />
-          {errors.password && <p className="error">{errors.password}</p>}
+          <label className="block mb-1 font-semibold text-gray-700">Password</label>
+          <input 
+            type="password" 
+            name="password" 
+            value={form.password} 
+            onChange={handleChange} 
+            className="w-full p-2 border border-gray-300 rounded-md mb-4 focus:ring-2 focus:ring-[#8e24aa] focus:border-transparent"
+          />
+          {errors.password && <p className="text-red-600 text-sm mt-[-8px] mb-3">{errors.password}</p>}
 
-          <button type="submit">Sign In</button>
+          {/* Equivalent of .signin-form button */}
+          <button 
+            type="submit"
+            className="
+              w-full bg-[#8e24aa] hover:bg-[#6a1b9a] text-white 
+              py-3 rounded-md font-bold cursor-pointer transition duration-200
+            "
+          >
+            Sign In
+          </button>
 
           {message && (
-            <p className={`message ${message.startsWith("Error") ? "text-red-600" : "text-green-600"}`}>
+            <p className={`mt-4 text-center font-bold ${message.startsWith("Error") ? "text-red-600" : "text-green-600"}`}>
               {message}
             </p>
           )}
