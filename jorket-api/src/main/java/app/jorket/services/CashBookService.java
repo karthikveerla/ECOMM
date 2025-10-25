@@ -5,6 +5,7 @@ import app.jorket.entities.CashBook;
 import app.jorket.entities.User;
 import app.jorket.entities.enums.EntryType;
 import app.jorket.repositories.CashBookRepository;
+import app.jorket.repositories.RecordEntryRepository;
 import app.jorket.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -21,6 +22,7 @@ public class CashBookService {
 
     private final CashBookRepository cashBookRepo;
     private final UserRepository userRepo; // Assuming you fetch user from token/session
+    private final RecordEntryRepository entryRepo;
 
     public void createCashBook(CashBookRequest request, Long userId) {
         User user = userRepo.findById(userId)
@@ -57,6 +59,16 @@ public class CashBookService {
                 book.getCreatedAt()
             );
         }).collect(Collectors.toList());
+    }
+
+    public void deleteCashBookById(Long id) {
+        if (!cashBookRepo.existsById(id)) {
+            throw new IllegalArgumentException("CashBook not found with id: " + id);
+        }
+
+        entryRepo.deleteByCashBookId(id);
+        
+        cashBookRepo.deleteById(id);
     }
 
 }

@@ -13,7 +13,9 @@ import app.jorket.services.CashBookService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
 
@@ -36,6 +38,13 @@ public class CashBookController {
         public ResponseEntity<List<CashBookSummaryResponse>> listBooks(@RequestParam Long userId) {
             List<CashBookSummaryResponse> books = cashBookService.getCashBooksForUser(userId);
             return ResponseEntity.ok(books);
+        }
+
+
+        @DeleteMapping("/delete/{id}")
+        public ResponseEntity<String> deleteCashBook(@PathVariable Long id) {
+            cashBookService.deleteCashBookById(id);
+            return ResponseEntity.ok("Cashbook deleted successfully.");
         }
 
 }

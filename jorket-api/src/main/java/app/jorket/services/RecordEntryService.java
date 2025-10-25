@@ -55,5 +55,12 @@ public class RecordEntryService {
         )).collect(Collectors.toList());
     }
 
+    public void deleteRecordById(Long id) {
+        if (!entryRepo.existsById(id)) {
+            throw new IllegalArgumentException("Record not found with id: " + id);
+        }
+        entryRepo.deleteById(id);
+    }
+
 }
 
