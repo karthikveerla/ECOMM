@@ -47,4 +47,15 @@ public class JwtService {
     public String extractEmail(String token) {
         return validateToken(token).getSubject();
     }
+    
+     public boolean isTokenValid(String token) {
+        try {
+            Claims claims = validateToken(token);
+            Date expiration = claims.getExpiration();
+            return expiration.after(new Date());
+        } catch (JwtException | IllegalArgumentException e) {
+            return false;
+        }
+    }
+    
 }

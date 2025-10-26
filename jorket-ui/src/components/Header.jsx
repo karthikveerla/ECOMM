@@ -1,5 +1,6 @@
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
+import axios from "axios"; 
 // REMOVED: import "../styles/Header.css";
 
 // Estimated header height is 64px (p-4 + content) -> h-16
@@ -19,8 +20,24 @@ export default function Header() {
     const name = localStorage.getItem("userName");
 
     if (token && name) {
-      setIsLoggedIn(true);
-      setUserName(name);
+      // ✅ Verify token validity with backend
+      axios
+        .get("http://localhost:8080/api/v1/auth/validate", {
+          headers: { Authorization: `Bearer ${token}` },
+        })
+        .then(() => {
+          setIsLoggedIn(true);
+          setUserName(name);
+        })
+        .catch(() => {
+          // ❌ Token invalid → force logout
+          localStorage.removeItem("accessToken");
+          localStorage.removeItem("userId");
+          localStorage.removeItem("userName");
+          localStorage.removeItem("userEmail");
+          setIsLoggedIn(false);
+          setUserName("");
+        });
     } else {
       setIsLoggedIn(false);
       setUserName("");
