@@ -62,5 +62,34 @@ public class RecordEntryService {
         entryRepo.deleteById(id);
     }
 
+
+    public RecordEntry updateRecord(Long id, RecordEntryRequest request) {
+        RecordEntry existing = entryRepo.findById(id)
+                .orElseThrow(() -> new RuntimeException("Record not found"));
+
+        // update fields
+        existing.setDate(request.getDate());
+        existing.setAmount(request.getAmount());
+        existing.setCategory(request.getCategory());
+        if (request.getPaymentMode() != null) {
+            existing.setPaymentMode(PaymentMode.valueOf(request.getPaymentMode().toUpperCase()));
+        }
+        existing.setDescription(request.getDescription());
+        existing.setReceiptUrl(request.getReceiptUrl());
+
+        // safely set enum field
+        if (request.getEntryType() != null) {
+            existing.setType(EntryType.valueOf(request.getEntryType().toUpperCase()));
+        }
+
+        // handle cashbook if needed
+        if (request.getCashBookId() != null) {
+            CashBook book = bookRepo.findById(request.getCashBookId())
+                    .orElseThrow(() -> new RuntimeException("CashBook not found"));
+            existing.setCashBook(book);
+        }
+
+        return entryRepo.save(existing);
+    }
 }
 

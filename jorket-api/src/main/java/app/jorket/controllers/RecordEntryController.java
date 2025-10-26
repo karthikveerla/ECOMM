@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import app.jorket.dto.RecordEntryRequest;
 import app.jorket.dto.RecordEntryResponse;
+import app.jorket.entities.RecordEntry;
 import app.jorket.services.RecordEntryService;
 import lombok.RequiredArgsConstructor;
 
@@ -41,6 +43,15 @@ public class RecordEntryController {
     public ResponseEntity<String> deleteRecord(@PathVariable Long id) {
         entryService.deleteRecordById(id);
         return ResponseEntity.ok("Record deleted successfully.");
+    }
+
+    @PutMapping("/update/{id}")
+    public ResponseEntity<RecordEntry> updateRecord(
+            @PathVariable Long id,
+            @RequestBody RecordEntryRequest request) {
+
+        RecordEntry updated = entryService.updateRecord(id, request);
+        return ResponseEntity.ok(updated);
     }
 
 }
