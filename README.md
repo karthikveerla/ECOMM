@@ -164,6 +164,7 @@ Authorization: Bearer <token>
 
 Karthik Veerla
 Full Stack Developer | Java • Spring Boot • React • Oracle • AWS
-📧 your.email@example.com
+📧 karthikveerla28@gmail.com
 
-🔗 LinkedIn Profile
+🔗[ LinkedIn Profile
+](https://www.linkedin.com/in/karthikveerla/)
