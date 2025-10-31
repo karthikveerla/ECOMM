@@ -18,9 +18,8 @@ public class JwtService {
     @Value("${jwt.secret}")
     private String jwtSecret;
 
-    @Value("${jwt.access-token-expiration}")
-    private long accessTokenExpiration;
     private Key key;
+    
     @PostConstruct
     public void init() {
         this.key = Keys.hmacShaKeyFor(jwtSecret.getBytes(StandardCharsets.UTF_8));
@@ -47,7 +46,7 @@ public class JwtService {
     public String extractEmail(String token) {
         return validateToken(token).getSubject();
     }
-    
+
      public boolean isTokenValid(String token) {
         try {
             Claims claims = validateToken(token);
