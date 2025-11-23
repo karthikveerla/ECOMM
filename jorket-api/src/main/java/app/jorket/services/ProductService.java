@@ -27,8 +27,8 @@ public class ProductService {
         return repo.findById(id).orElse(new Product());
     }
 
-    public void addProduct(Product product){
-        repo.save(product);
+    public Product addProduct(Product product){
+       return repo.save(product);
     }   
 
     public void updateProduct(Product product){

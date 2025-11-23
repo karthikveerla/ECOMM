@@ -1,4 +1,4 @@
-package app.jorket.jorket_api;
+package app.jorket;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
