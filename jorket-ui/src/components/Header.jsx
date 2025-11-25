@@ -22,7 +22,7 @@ export default function Header() {
     if (token && name) {
       // ✅ Verify token validity with backend
       axios
-        .get("http://localhost:8080/api/v1/auth/validate", {
+        .get("http://localhost:8080/api/v1/user/validate", {
           headers: { Authorization: `Bearer ${token}` },
         })
         .then(() => {

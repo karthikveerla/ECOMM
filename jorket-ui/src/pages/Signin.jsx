@@ -50,9 +50,6 @@ export default function Signin() {
         localStorage.setItem("userId", id);
         localStorage.setItem("userName", fullName);
         localStorage.setItem("userEmail", userEmail);
-        console.log("User data saved to localStorage");
-        console.log("Access Token:", accessToken);
-        console.log("User ID:", id);
         setTimeout(() => {
           navigate("/dashboard"); // or any application-inside route
         }, 1000);

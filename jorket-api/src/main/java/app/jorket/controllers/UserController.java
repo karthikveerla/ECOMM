@@ -37,4 +37,9 @@ public class UserController {
         AuthResponse response = userService.login(request);
         return ResponseEntity.ok(response);
     }
+
+     @GetMapping("/validate")
+    public ResponseEntity<String> validate() {
+        return ResponseEntity.ok("valid");
+    }
 }
